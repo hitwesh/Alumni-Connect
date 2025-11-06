@@ -1,0 +1,7 @@
+name,email,password,role
+Test User,test@example.com,test,student
+Hitesh,hiteshroy0001@gmail.com,abcd1234,student
+Hitesh,hiteshroy2005@gmail.com,abcd1234,student
+abcd,abcd@abcd,abcd,student
+Unit Test,unittest@example.com,pwd,student
+h,abcd@gmail.com,abcd1234,student

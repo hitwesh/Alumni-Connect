@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Find Mentor - Alumni Connect{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <div class="card p-4">
+      <h4 class="mb-3">AI-Based Mentor Recommendation</h4>
+      <form method="POST" action="/recommend">
+        <div class="mb-3">
+          <label class="form-label">Enter Your Skills</label>
+          <input type="text" name="interests" class="form-control" placeholder="e.g. Python, Flask, ML" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Find Mentor</button>
+      </form>
+    </div>
+
+    {% if mentors %}
+      <div class="mt-4">
+        <h5>Recommended Mentors</h5>
+        {% for mentor in mentors %}
+          <div class="card recommendation-card p-3">
+            <div class="d-flex justify-content-between">
+              <div>
+                <strong>{{ mentor['name'] }}</strong>
+                <p class="mb-0 text-muted">{{ mentor.get('department', '') }} — {{ mentor.get('batch','') }}</p>
+                <small>{{ mentor['email'] }}</small>
+              </div>
+              <div class="text-end">
+                <span class="badge bg-primary">Score: {{ '%.2f'|format(mentor.get('score',0)) }}</span>
+              </div>
+            </div>
+            <p class="mt-2">{% for s in (mentor['skills'] or '').split(',') %}<span class="skill-badge">{{ s.strip() }}</span>{% endfor %}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+      <a href="/dashboard" class="btn btn-outline-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

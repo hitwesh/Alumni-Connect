@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Alumni Directory - Alumni Connect{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <h2 class="mb-3 text-center">Alumni Directory</h2>
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Batch</th>
+          <th>Department</th>
+          <th>Skills</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in alumni %}
+        <tr>
+          <td><strong>{{ row['name'] }}</strong></td>
+          <td>{{ row['email'] }}</td>
+          <td>{{ row['batch'] }}</td>
+          <td>{{ row['department'] }}</td>
+          <td>
+            {% for s in (row['skills'] or '').split(',') %}
+              <span class="skill-badge">{{ s.strip() }}</span>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center mt-3">
+    <a href="/" class="btn btn-outline-secondary">Back to Home</a>
+  </div>
+</div>
+{% endblock %}

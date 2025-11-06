@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Innovation Project{% endblock %}</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-graduation-cap me-2"></i>Alumni Connect
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home me-1"></i>Home</a>
+                    </li>
+                    {% if 'user' in session %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt me-1"></i>Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/alumni"><i class="fas fa-users me-1"></i>Alumni</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/recommend"><i class="fas fa-star me-1"></i>Find Mentor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register"><i class="fas fa-user-plus me-1"></i>Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-4">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {# Show only the most recent flash message to prevent stacking #}
+                    {% set _last = messages[-1] %}
+                    {% set category = _last[0] %}
+                    {% set message = _last[1] %}
+                    <div id="flashed-message" class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">© 2025 Alumni Connect. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+        {% block extra_js %}{% endblock %}
+        <script>
+            // Auto-dismiss flashed message after a timeout and use Bootstrap's alert API if available
+            document.addEventListener('DOMContentLoaded', function () {
+                const alertEl = document.getElementById('flashed-message');
+                if (!alertEl) return;
+
+                // Remove existing alerts if a new one is added later (handles partial updates)
+                const removeExisting = () => {
+                    document.querySelectorAll('.alert').forEach(el => {
+                        if (el !== alertEl) el.remove();
+                    });
+                };
+                removeExisting();
+
+                // Auto close after 5 seconds
+                const timeout = 5000;
+                setTimeout(() => {
+                    try {
+                        // Bootstrap alert API
+                        const bsAlert = bootstrap.Alert.getOrCreateInstance(alertEl);
+                        bsAlert.close();
+                    } catch (e) {
+                        // Fallback: fade out then remove
+                        alertEl.classList.remove('show');
+                        alertEl.classList.add('fade');
+                        setTimeout(() => alertEl.remove(), 300);
+                    }
+                }, timeout);
+            });
+        </script>
+</body>
+</html>

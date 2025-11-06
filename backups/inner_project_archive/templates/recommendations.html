@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Recommended Mentors</h2>
+{% if mentors %}
+  <ul class="list-group">
+    {% for m in mentors %}
+      <li class="list-group-item">
+        <strong>{{ m.name }}</strong> — {{ m.skills }}
+        <span class="badge bg-success float-end">Score: {{ m.similarity_score }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No recommendations found.</p>
+{% endif %}
+<a href="/recommend" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}

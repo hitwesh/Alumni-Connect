@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Mentor Recommendation</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">AI-Based Mentor Recommendation</h2>
+    <form method="POST" action="/recommend">
+      <div class="mb-3">
+        <label class="form-label">Enter Your Skills</label>
+        <input type="text" name="interests" class="form-control" placeholder="e.g. Python, Flask, ML" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Find Mentor</button>
+    </form>
+
+    {% if mentors %}
+    <hr>
+    <h4 class="mt-4">Recommended Mentors:</h4>
+    <ul class="list-group">
+      {% for mentor in mentors %}
+      <li class="list-group-item">
+        <strong>{{ mentor['name'] }}</strong> — {{ mentor['skills'] }} <br>
+        <small>{{ mentor['email'] }}</small>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <a href="/dashboard" class="btn btn-secondary mt-4">Back to Dashboard</a>
+  </div>
+</body>
+</html>

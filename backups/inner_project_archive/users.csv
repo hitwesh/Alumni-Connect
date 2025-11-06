@@ -1,0 +1,3 @@
+REMOVED: The authoritative users CSV has been consolidated to `../database/users.csv`.
+This file was truncated to avoid duplication. A backup exists at `backups/users.csv.bak`.
+Inner Test,innertest@example.com,pwd,student

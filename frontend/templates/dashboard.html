@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Alumni Connect{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">
+    <div class="profile-section mb-4">
+      <h3>Welcome, {{ session['user']['name'] }}</h3>
+      <p class="text-muted">You are logged in as <strong>{{ session['user']['role'] }}</strong></p>
+      <div class="mt-3">
+        <a href="/alumni" class="btn btn-outline-primary me-2"><i class="bi bi-people me-1"></i>Alumni Directory</a>
+        <a href="/recommend" class="btn btn-primary me-2"><i class="bi bi-star me-1"></i>Find Mentor</a>
+        <a href="/logout" class="btn btn-danger"><i class="bi bi-box-arrow-right me-1"></i>Logout</a>
+      </div>
+    </div>
+
+    <div class="dashboard-stats mb-4">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="stats-card">
+            <i class="bi bi-people-fill"></i>
+            <h4 class="mt-2">{{ alumni_count or '—' }}</h4>
+            <p class="text-muted">Alumni Profiles</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stats-card">
+            <i class="bi bi-translate"></i>
+            <h4 class="mt-2">{{ mentors_found or '—' }}</h4>
+            <p class="text-muted">Mentor Matches</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stats-card">
+            <i class="bi bi-person-plus-fill"></i>
+            <h4 class="mt-2">{{ new_signups or '—' }}</h4>
+            <p class="text-muted">New Signups</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card profile-section">
+      <div class="card-body text-center">
+        <i class="fas fa-user-circle fa-4x text-primary mb-3"></i>
+        <h5>{{ session['user']['name'] }}</h5>
+        <p class="text-muted">{{ session['user']['email'] }}</p>
+        <p><span class="badge bg-secondary">{{ session['user']['role'] }}</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
