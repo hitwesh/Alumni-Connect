@@ -126,14 +126,6 @@ The platform uses:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👥 Authors
-
-- **hitwesh** - *Initial work and maintenance*
-
-## �📞 Support
-
-For support, email hiteshroy0001@gmail.com or open an issue in the GitHub repository.
-
 ## 🙏 Acknowledgments
 
 - Bootstrap team for the excellent UI framework
@@ -142,4 +134,4 @@ For support, email hiteshroy0001@gmail.com or open an issue in the GitHub reposi
 - All contributors and testers
 
 ---
-Made with ❤️ by hitwesh
+
