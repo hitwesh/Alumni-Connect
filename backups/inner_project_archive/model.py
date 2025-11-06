@@ -36,7 +36,7 @@ def recommend_mentors(user_skills, alumni_data, top_n=5):
 if __name__ == "__main__":
     data = load_alumni_data("alumni_dataset.csv")
     if not data.empty:
-        mentors = recommend_mentors("Python, Machine Learning, AI", data="alumni_dataset.csv", top_n=3)
+        mentors = recommend_mentors("Python, Machine Learning, AI", alumni_data=data, top_n=3)
         for m in mentors:
             print(f"{m['name']} ({m['email']}) - Skills: {m['skills']}")
     else:

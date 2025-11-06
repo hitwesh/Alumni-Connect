@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import csv
 import os
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
 # Import configuration
 from config import Config
+from model import recommend_mentors as recommend_mentors_from_model
 
 # Configure template and static folders to point to frontend directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -58,19 +57,9 @@ init_files()
 def load_alumni_data():
     if os.path.exists(ALUMNI_FILE):
         df = pd.read_csv(ALUMNI_FILE)
+        df.fillna('', inplace=True) # Convert NaN to empty strings
         return df
     return pd.DataFrame(columns=['name','email','batch','department','skills'])
-
-def recommend_mentors(interest, top_n=5):
-    df = load_alumni_data()
-    if df.empty:
-        return []
-    corpus = df['skills'].fillna('')
-    vectorizer = CountVectorizer().fit_transform([interest] + list(corpus))
-    cosine_sim = cosine_similarity(vectorizer)[0][1:]
-    df['score'] = cosine_sim
-    top = df.sort_values(by='score', ascending=False).head(top_n)
-    return top.to_dict('records')
 
 @app.route('/')
 def home():
@@ -176,7 +165,8 @@ def recommend():
         interest = (interest or '').strip()
         print('Interest submitted:', interest)
         if interest:
-            mentors = recommend_mentors(interest)
+            alumni_df = load_alumni_data()
+            mentors = recommend_mentors_from_model(interest, alumni_df)
             print(mentors)
     return render_template('recommend.html', mentors=mentors)
 

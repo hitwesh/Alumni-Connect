@@ -16,20 +16,32 @@ def load_alumni_data(csv_path):
 def recommend_mentors(user_skills, alumni_data, top_n=5): 
     if alumni_data.empty:
         return []  
-    corpus = alumni_data['skills'].astype(str).tolist() + [user_skills]
-    vectorizer = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = vectorizer.fit_transform(corpus)
-    cosine_sim = cosine_similarity(tfidf_matrix[-1], tfidf_matrix[:-1]).flatten()
+    
+    # Corpus should only contain the documents to learn the vocabulary from
+    corpus = alumni_data['skills'].astype(str).tolist()
+    vectorizer = TfidfVectorizer(
+        analyzer='char_wb', # Analyze characters within word boundaries for typo tolerance
+        ngram_range=(2, 5), # Use n-grams of length 2 to 5
+        min_df=1 # Include words that appear in at least one document
+    )
+
+    # Fit on the alumni skills, then transform both alumni and user skills
+    alumni_tfidf_matrix = vectorizer.fit_transform(corpus)
+    user_tfidf_vector = vectorizer.transform([user_skills])
+
+    cosine_sim = cosine_similarity(user_tfidf_vector, alumni_tfidf_matrix).flatten()
     top_indices = cosine_sim.argsort()[::-1][:top_n]
     recommendations = []
     for idx in top_indices:
+        score = cosine_sim[idx]
         mentor = alumni_data.iloc[idx]
         recommendations.append({
             'name': mentor['name'],
             'email': mentor['email'],
             'batch': mentor['batch'],
             'department': mentor['department'],
-            'skills': mentor['skills']
+            'skills': mentor['skills'],
+            'score': score
         })
 
     return recommendations

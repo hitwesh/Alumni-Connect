@@ -28,7 +28,7 @@
                 <small>{{ mentor['email'] }}</small>
               </div>
               <div class="text-end">
-                <span class="badge bg-primary">Score: {{ '%.2f'|format(mentor.get('score',0)) }}</span>
+                <span class="badge bg-success">Score: {{ '%.2f'|format(mentor.get('score', 0.0)) }}</span>
               </div>
             </div>
             <p class="mt-2">{% for s in (mentor['skills'] or '').split(',') %}<span class="skill-badge">{{ s.strip() }}</span>{% endfor %}</p>
