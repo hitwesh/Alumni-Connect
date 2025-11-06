@@ -33,7 +33,7 @@ A modern web platform connecting students with alumni mentors using AI-powered r
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/CornicleWasTaken/InnovationProject.git
+git clone https://github.com/hitwesh/Alumni-Connect.git
 cd InnovationProject
 ```
 
