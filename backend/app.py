@@ -5,6 +5,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
+# Import configuration
+from config import Config
+
 # Configure template and static folders to point to frontend directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, '..', 'frontend', 'templates')
@@ -16,8 +19,16 @@ app = Flask(__name__,
            static_folder=STATIC_DIR,
            static_url_path='/static')
 
-# Set secret key from environment variable in production, fallback to default in development
-app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'secretkey123')
+# Apply configuration
+app.config.from_object(Config)
+
+# Configure session security
+if app.config['FLASK_ENV'] == 'production':
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='Lax'
+    )
 
 # Configure production settings
 if os.environ.get('FLASK_ENV') == 'production':
