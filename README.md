@@ -128,10 +128,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- Bootstrap team for the excellent UI framework
-- Flask community for the robust web framework
-- scikit-learn team for machine learning tools
-- All contributors and testers
+Props to Hitesh Kumar Roy, Samik Sarkar, Riya Ghosh for managing, directing, and Implementing this project.
+Special thanks to Hitesh Kumar Roy for deployment of this project on Render
+Special thanks to Samik Sarkar and Hitesh Kumar Roy for testing and bug fixing.
 
 ---
 
