@@ -2,7 +2,6 @@
 
 A modern web platform connecting students with alumni mentors using AI-powered recommendations.
 
-![Alumni Connect](frontend/static/img/hero-illustration.svg)
 
 ## 🌟 Features
 
