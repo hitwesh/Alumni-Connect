@@ -34,7 +34,6 @@ https://alumni-connect-1fd0.onrender.com/
 1. Clone the repository:
 ```bash
 git clone https://github.com/hitwesh/Alumni-Connect.git
-cd InnovationProject
 ```
 
 2. Create and activate a virtual environment (recommended):
@@ -48,7 +47,7 @@ source venv/bin/activate
 
 3. Install required packages:
 ```bash
-pip install flask pandas scikit-learn
+pip install -r requirements.txt
 ```
 
 4. Run the application:
